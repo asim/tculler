@@ -3,6 +3,10 @@
 TCuller is a tweet culler. It let's you delete all your tweets and favorites.
 
 ```shell
+go get github.com/asim/tculler
+```
+
+```shell
 tculler -consumer_key $CONSUMER_KEY \
 	-consumer_secret $CONSUMER_SECRET \
 	-access_token $ACCESS_TOKEN \
