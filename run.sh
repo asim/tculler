@@ -1,0 +1,7 @@
+CONSUMER_KEY=
+CONSUMER_SECRET=
+ACCESS_TOKEN=
+ACCESS_SECRET=
+USERNAME=
+
+tculler -consumer_key $CONSUMER_KEY -consumer_secret $CONSUMER_SECRET -access_token $ACCESS_TOKEN -access_secret $ACCESS_SECRET -username $USERNAME $1
