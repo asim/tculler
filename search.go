@@ -15,16 +15,16 @@ func search(api *anaconda.TwitterApi) error {
 
 	maxId := ""
 
+	fmt.Println("searching for", fmt.Sprintf("@%s", *username))
+
 	for {
 		vals := url.Values{}
 		vals.Set("count", "100")
-		vals.Set("q", fmt.Sprintf("@%s", *username))
 
 		if len(maxId) > 0 {
 			vals.Set("max_id", maxId)
 		}
 
-		fmt.Println("searching for", fmt.Sprintf("@%s", *username))
 		sr, err := api.GetSearch(fmt.Sprintf("@%s", *username), vals)
 		if err != nil {
 			return err
