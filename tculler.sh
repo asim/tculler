@@ -3,5 +3,6 @@ CONSUMER_SECRET=
 ACCESS_TOKEN=
 ACCESS_SECRET=
 USERNAME=
+CSV_FILE=
 
-tculler -consumer_key $CONSUMER_KEY -consumer_secret $CONSUMER_SECRET -access_token $ACCESS_TOKEN -access_secret $ACCESS_SECRET -username $USERNAME $1
+tculler -consumer_key $CONSUMER_KEY -consumer_secret $CONSUMER_SECRET -access_token $ACCESS_TOKEN -access_secret $ACCESS_SECRET -username $USERNAME -csv_file=$CSV_FILE $1

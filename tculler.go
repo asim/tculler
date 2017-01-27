@@ -13,15 +13,17 @@ var (
 	consumerKey    = flag.String("consumer_key", "", "Twitter consumer key")
 	consumerSecret = flag.String("consumer_secret", "", "Twitter consumer secret")
 	username       = flag.String("username", "", "Username for media timeline deletion")
+	csvFile        = flag.String("csv_file", "tweets.csv", "Path to tweets csv file")
 
 	commands = map[string]func(*anaconda.TwitterApi) error{
 		"faves":  faves,
 		"media":  media,
 		"search": search,
 		"tweets": tweets,
+		"csv":    csv,
 	}
 
-	usage = "\ntculler <tweets|search|faves|media>"
+	usage = "\ntculler <tweets|search|faves|media|csv>"
 )
 
 func main() {

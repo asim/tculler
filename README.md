@@ -11,7 +11,6 @@ tculler -consumer_key $CONSUMER_KEY \
 	-consumer_secret $CONSUMER_SECRET \
 	-access_token $ACCESS_TOKEN \
 	-access_secret $ACCESS_SECRET \
-	-username $USERNAME \
 	tweets
 ```
 
@@ -27,8 +26,10 @@ Usage of tculler:
     	Twitter consumer key
   -consumer_secret string
     	Twitter consumer secret
+  -csv_file string
+    	Path to tweets csv file (default "tweets.csv")
   -username string
     	Username for media timeline deletion
 
-tculler <tweets|faves|media>
+tculler <tweets|search|faves|media|csv>
 ```
