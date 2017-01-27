@@ -15,12 +15,13 @@ var (
 	username       = flag.String("username", "", "Username for media timeline deletion")
 
 	commands = map[string]func(*anaconda.TwitterApi) error{
-		"faves": faves,
-		"media": media,
+		"faves":  faves,
+		"media":  media,
+		"search": search,
 		"tweets": tweets,
 	}
 
-	usage    = "\ntculler <tweets|faves|media>"
+	usage = "\ntculler <tweets|search|faves|media>"
 )
 
 func main() {
