@@ -9,11 +9,17 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/ChimeraCoder/anaconda"
 )
 
 func getIDs(username string) ([]int64, error) {
+	t, err := date(*olderThan)
+	if err != nil {
+		return nil, err
+	}
+
 	rsp, err := http.Get(fmt.Sprintf("https://twitter.com/%s/media", username))
 	if err != nil {
 		return nil, err
@@ -42,7 +48,22 @@ func getIDs(username string) ([]int64, error) {
 			continue
 		}
 
-		part := strings.Split(strings.Split(l, " ")[3], "/")[3]
+		// create parts
+		parts := strings.Split(l, " ")
+		part := strings.Split(parts[3], "/")[3]
+		// get date
+		date := strings.Join(parts[8:14], " ")
+		date = strings.Split(date, `"`)[1]
+		// 3:37 am - 18 Feb 2017
+		ti, err := time.Parse("3:04 pm - 2 Jan 2006", date)
+		if err != nil {
+			return nil, err
+		}
+
+		if ti.After(t) {
+			continue
+		}
+
 		i, _ := strconv.ParseInt(strings.TrimSuffix(part, `"`), 10, 64)
 		ids = append(ids, i)
 	}

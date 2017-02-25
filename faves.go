@@ -3,11 +3,17 @@ package main
 import (
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/ChimeraCoder/anaconda"
 )
 
 func faves(api *anaconda.TwitterApi) error {
+	t, err := date(*olderThan)
+	if err != nil {
+		return err
+	}
+
 	vals := url.Values{}
 	vals.Set("count", "200")
 
@@ -26,13 +32,22 @@ func faves(api *anaconda.TwitterApi) error {
 			return err
 		}
 
-		for _, t := range tl {
-			_, err := api.Unfavorite(t.Id)
+		for _, tw := range tl {
+			ti, err := time.Parse(time.RubyDate, tw.CreatedAt)
 			if err != nil {
-				return fmt.Errorf("error unfaving %d: %v", t.Id, err)
+				return err
 			}
-			fmt.Println("unfaving", t.Id)
-			maxId = fmt.Sprintf("%d", t.Id)
+
+			if ti.After(t) {
+				continue
+			}
+
+			_, err = api.Unfavorite(tw.Id)
+			if err != nil {
+				return fmt.Errorf("error unfaving %d: %v", tw.Id, err)
+			}
+			fmt.Println("unfaving", tw.Id)
+			maxId = fmt.Sprintf("%d", tw.Id)
 		}
 	}
 }

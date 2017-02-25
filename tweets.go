@@ -3,11 +3,17 @@ package main
 import (
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/ChimeraCoder/anaconda"
 )
 
 func tweets(api *anaconda.TwitterApi) error {
+	td, err := date(*olderThan)
+	if err != nil {
+		return err
+	}
+
 	maxId := ""
 
 	for {
@@ -26,7 +32,16 @@ func tweets(api *anaconda.TwitterApi) error {
 		}
 
 		for _, t := range tl {
-			_, err := api.DeleteTweet(t.Id, true)
+			ti, err := time.Parse(time.RubyDate, t.CreatedAt)
+			if err != nil {
+				return err
+			}
+
+			if ti.After(td) {
+				continue
+			}
+
+			_, err = api.DeleteTweet(t.Id, true)
 			if err != nil {
 				return fmt.Errorf("error deleting %d: %v", t.Id, err)
 			}

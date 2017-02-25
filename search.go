@@ -4,11 +4,17 @@ import (
 	"errors"
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/ChimeraCoder/anaconda"
 )
 
 func search(api *anaconda.TwitterApi) error {
+	td, err := date(*olderThan)
+	if err != nil {
+		return err
+	}
+
 	if len(*username) == 0 {
 		return errors.New("require username for search deletion")
 	}
@@ -41,7 +47,16 @@ func search(api *anaconda.TwitterApi) error {
 				continue
 			}
 
-			_, err := api.DeleteTweet(t.Id, true)
+			ti, err := time.Parse(time.RubyDate, t.CreatedAt)
+			if err != nil {
+				return err
+			}
+
+			if ti.After(td) {
+				continue
+			}
+
+			_, err = api.DeleteTweet(t.Id, true)
 			if err != nil {
 				return fmt.Errorf("error deleting %d: %v", t.Id, err)
 			}
