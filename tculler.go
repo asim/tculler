@@ -14,7 +14,7 @@ var (
 	consumerSecret = flag.String("consumer_secret", "", "Twitter consumer secret")
 	username       = flag.String("username", "", "Username for media timeline deletion")
 	csvFile        = flag.String("csv_file", "tweets.csv", "Path to tweets csv file")
-	olderThan      = flag.String("older_than", "", "Delete tweets older than (1d|1h|1w|1yr) default deletes all")
+	olderThan      = flag.String("older_than", "", "Delete tweets older than (1m|1h|1d) default deletes all")
 
 	commands = map[string]func(*anaconda.TwitterApi) error{
 		"faves":  faves,
